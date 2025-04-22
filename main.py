@@ -3,7 +3,7 @@ import json
 import random
 
 # Deepseek
-#import deepseekDirect as chatbot
+import deepseekDirect as chatbot
 
 
 
@@ -29,8 +29,8 @@ def receive_message():
     print(f"Received message: {message}")
     
     # Send a message to the bot
-    #chat_resp = str(chatbot.chat(prompt + message)['message']['content'].split('</think>\n\n')[1])
-    chat_resp = "no ai"
+    chat_resp = str(chatbot.chat(prompt + message)['message']['content'].split('</think>\n\n')[1])
+    #chat_resp = "no ai"
 
     selected_events = [{"day": "Friday", "start": "0:00 AM", "end": "12:00 PM", "event": "Meeting with Bob"},
                        {"day": "Sunday", "start": "12:00 PM", "end": "6:00 PM", "event": "Meeting with Bob"},]
