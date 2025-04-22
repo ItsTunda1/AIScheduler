@@ -136,7 +136,7 @@ body {
     margin: 0;
 
     resize: none;   /* No resize*/
-    pointer-events: none;  /* Disable any interaction with the textarea */
+    /*pointer-events: none;  /* Disable any interaction with the textarea */
     user-select: text;  /* Allow text selection */
 }
 

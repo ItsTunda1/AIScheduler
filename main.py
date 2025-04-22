@@ -27,6 +27,12 @@ event_pool = [
 """
 Get data from chatbox.js
 """
+prompt = """
+### Instructions:
+You are a scheduling assistant. The user will give you time blocks of events and you will help organize it based on their criteria. Send the best schedule based on the criteria. Be very careful not modify the times provided. Try to reduce any scheduling conflicts if possible. If not possible tell the user about the dilemma.
+
+### User Prompt:
+"""
 # API route to receive messages
 @post('/api/chat')
 def receive_message():
@@ -42,7 +48,7 @@ def receive_message():
     selected_events = random.sample(event_pool, 3)  # Random events
     
     # Send a message to the bot
-    chat_resp = str(chatbot.chat(message)['message']['content'].split('</think>\n\n')[1])
+    chat_resp = str(chatbot.chat(prompt + message)['message']['content'].split('</think>\n\n')[1])
 
     # Prepare the response containing both chat and calendar data
     response.content_type = 'application/json'
