@@ -173,17 +173,20 @@ body {
 }
 
 .loader-container {
-    position: fixed;
-    top: 50%;
-    left: 40%;
+    position: absolute;
+    /*top: 50%;
+    left: 40%;*/
+    left: -50px;
+    top: -50px;
     width: 100px;
     height: 100px;
+    z-index: 10;
 }
   
 .dot {
     width: 12px;
     height: 12px;
-    background-color: #00ffff;
+    background-color: black;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -258,4 +261,35 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* Dots Fade Out */
+@keyframes fadeOutSmooth {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+  
+.fade-out {
+    animation: fadeOutSmooth 0.25s ease forwards;
+}
+
+
+
+/* Text Box */
+.content {
+    position: fixed;
+    top: 650px;
+    width: 500px;
+    height: 100px;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    box-sizing: border-box;
+    text-align: left; /* Align the text to the left */
+    margin: 0;
+
+    resize: none;   /* No resize*/
+    /*pointer-events: none;  /* Disable any interaction with the textarea */
+    user-select: text;  /* Allow text selection */
 }

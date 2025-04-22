@@ -72,8 +72,7 @@ function stopLoading() {
     // After animation finishes, reveal content
     let fade_delay = 800;
     setTimeout(() => {
-        document.querySelector('.loader-container').style.display = 'none';
-        content.classList.remove('hidden');
+        //content.classList.remove('hidden');
         content.classList.add('reveal');
     }, fade_delay); // Adjust this timeout to match your animation duration
 
@@ -82,6 +81,14 @@ function stopLoading() {
     for (let i = 0; i < text.length; i++) {
         setTimeout(() => {
             content.textContent += text[i];
+
+            // Remove the dots
+            if (letter_delay * i >= 200) {
+                const loader = document.querySelector('.loader-container');
+                // Start fade out animation
+                loader.classList.add('fade-out');
+                content.classList.remove('hidden');
+            }
         }, letter_delay * i + 0.75*fade_delay);
     }
 }
