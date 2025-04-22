@@ -1,26 +1,30 @@
 // Listen for the Enter key press event on the chatbox
 document.getElementById("chatbox").addEventListener("keydown", function(event) {
+
     // Check if the Enter key (keyCode 13) is pressed and the Shift key is not pressed
     if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();  // Prevent default "Enter" behavior (creating a new line)
+        //Check if loading is done before submitting
+        if (done_loading == true) {
+            event.preventDefault();  // Prevent default "Enter" behavior (creating a new line)
 
-        // Get the message from the chatbox
-        let message = document.getElementById("chatbox").value.trim();
+            // Get the message from the chatbox
+            let message = document.getElementById("chatbox").value.trim();
 
-        if (message) {
-            // Send the message to the server (Python backend)
-            sendMessageToServer(message);
-            console.log("Message (js): " + message)
+            if (message) {
+                // Send the message to the server (Python backend)
+                sendMessageToServer(message);
+                console.log("Message (js): " + message)
 
-            // Clear the chatbox after sending the message
-            document.getElementById("chatbox").value = "";
+                // Clear the chatbox after sending the message
+                document.getElementById("chatbox").value = "";
+            }
         }
     }
 });
 
 function updateChat(chat_resp) {
     // Show it to the user
-    document.getElementById("responsebox").value = chat_resp;
+    document.querySelector('.content').textContent = chat_resp;
 }
 
 // Function to send the message to the Python server (API)
@@ -49,6 +53,7 @@ function sendMessageToServer(message) {
 
 
 // Loading Animation Functionality
+let done_loading = true;
 
 function stopLoading() {
     const dots = document.querySelectorAll('.dot');
@@ -89,20 +94,36 @@ function stopLoading() {
                 loader.classList.add('fade-out');
                 content.classList.remove('hidden');
             }
+
+            //Set the loading to be done on the last letter
+            if (i == text.length - 1) {
+                done_loading = true;
+                console.log(done_loading)
+            }
         }, letter_delay * i + 0.75*fade_delay);
     }
 }
-  
-// Trigger the loading stop after a delay
-setTimeout(stopLoading, 1000);
 
-// Add keyframes dynamically for flyRight
-const style = document.createElement('style');
-style.textContent = `
-@keyframes flyRight {
-to {
-    transform: translateX(300px);
-    opacity: 0;
+function startLoading() {
+    //Set done loading to false
+    done_loading = false;
+    console.log(done_loading)
+
+    const loader = document.querySelector('.loader-container');
+    const content = document.querySelector('.content');
+    const dots = document.querySelectorAll('.dot');
+
+    // Reset states
+    content.classList.remove('reveal');
+    content.classList.add('hidden');
+    loader.style.display = 'block';
+    loader.classList.remove('fade-out');
+
+    // Trigger spin (orbit animation is already in CSS)
+    dots.forEach((dot, index) => {
+    dot.style.animation = `orbit${index + 1} 0.6s linear infinite`;
+    });
+
+    // Simulate loading time, then stop and transition
+    setTimeout(() => stopLoading(), 1000); // ← your loading duration
 }
-}`;
-document.head.appendChild(style);  

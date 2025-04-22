@@ -195,19 +195,19 @@ body {
 
 #dot1 {
     transform: rotate(0deg) translateX(var(--loading-dot-dist));
-    animation: spin1 0.6s linear infinite;
+    animation: orbit1 0.6s linear infinite;
 }
 #dot2 {
     transform: rotate(120deg) translateX(var(--loading-dot-dist));
-    animation: spin2 0.6s linear infinite;
+    animation: orbit2 0.6s linear infinite;
 }
 #dot3 {
     transform: rotate(240deg) translateX(var(--loading-dot-dist));
-    animation: spin3 0.6s linear infinite;
+    animation: orbit3 0.6s linear infinite;
 }
   
 /* Independent rotations for each dot */
-@keyframes spin1 {
+@keyframes orbit1 {
     0% {
       transform: rotate(0deg) translateX(var(--loading-dot-dist));
     }
@@ -216,7 +216,7 @@ body {
     }
   }
   
-@keyframes spin2 {
+@keyframes orbit2 {
     0% {
       transform: rotate(120deg) translateX(var(--loading-dot-dist));
     }
@@ -225,7 +225,7 @@ body {
     }
   }
   
-@keyframes spin3 {
+@keyframes orbit3 {
     0% {
       transform: rotate(240deg) translateX(var(--loading-dot-dist));
     }
