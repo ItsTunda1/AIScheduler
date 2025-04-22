@@ -63,8 +63,9 @@ function stopLoading() {
       
         // Use setTimeout to delay the addition of the animation
         setTimeout(() => {
+            //dot.style.animation = "none";
             // Linear animation
-            dot.style.animation = `flyRight 1s ease-out forwards, fadeOut 1s ease ${delay / 1000}s forwards`;
+            dot.style.animation = `slideRight${index + 1} 1s ease-out, fadeOut 1s ease ${delay / 1000}s forwards`;
         }, delay); // Delay is in milliseconds
     });
 

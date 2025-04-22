@@ -173,7 +173,9 @@ body {
 }
 
 .loader-container {
-    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 40%;
     width: 100px;
     height: 100px;
 }
@@ -227,6 +229,21 @@ body {
     100% {
       transform: rotate(calc(-360deg + 240deg)) translateX(var(--loading-dot-dist));
     }
+}
+
+@keyframes slideRight1 {
+    from { transform: rotate(360deg) translateX(calc(-1*var(--loading-dot-dist))) translateY(var(--loading-dot-dist)); }
+    to   { transform: rotate(360deg) translateX(100px) translateY(var(--loading-dot-dist)); }
+}
+
+@keyframes slideRight2 {
+    from { transform: rotate(360deg) translateX(calc(-1*var(--loading-dot-dist))) translateY(var(--loading-dot-dist)); }
+    to   { transform: rotate(360deg) translateX(100px) translateY(var(--loading-dot-dist)); }
+}
+
+@keyframes slideRight3 {
+    from { transform: rotate(360deg) translateX(calc(-1*var(--loading-dot-dist))) translateY(var(--loading-dot-dist)); }
+    to   { transform: rotate(360deg) translateX(100px) translateY(var(--loading-dot-dist)); }
 }
 
 /* Text Hiding */
