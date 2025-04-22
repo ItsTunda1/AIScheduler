@@ -169,7 +169,7 @@ body {
 /* Cool Loading Effect */
 
 :root {
-    --loading-dot-dist: 35px;
+    --loading-dot-dist: 15px;
 }
 
 .loader-container {
@@ -204,27 +204,41 @@ body {
 /* Independent rotations for each dot */
 @keyframes spin1 {
     0% {
-      transform: rotate(0deg) translateX(35px);
+      transform: rotate(0deg) translateX(var(--loading-dot-dist));
     }
     100% {
-      transform: rotate(-360deg) translateX(35px);
+      transform: rotate(-360deg) translateX(var(--loading-dot-dist));
     }
   }
   
 @keyframes spin2 {
     0% {
-      transform: rotate(120deg) translateX(35px);
+      transform: rotate(120deg) translateX(var(--loading-dot-dist));
     }
     100% {
-      transform: rotate(calc(-360deg + 120deg)) translateX(35px);
+      transform: rotate(calc(-360deg + 120deg)) translateX(var(--loading-dot-dist));
     }
   }
   
 @keyframes spin3 {
     0% {
-      transform: rotate(240deg) translateX(35px);
+      transform: rotate(240deg) translateX(var(--loading-dot-dist));
     }
     100% {
-      transform: rotate(calc(-360deg + 240deg)) translateX(35px);
+      transform: rotate(calc(-360deg + 240deg)) translateX(var(--loading-dot-dist));
     }
+}
+
+/* Text Hiding */
+.hidden {
+    opacity: 0;
+}
+  
+.reveal {
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

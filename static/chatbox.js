@@ -52,6 +52,9 @@ function sendMessageToServer(message) {
 
 function stopLoading() {
     const dots = document.querySelectorAll('.dot');
+    const content = document.querySelector('.content');
+    const text = content.textContent
+    content.textContent = ""
 
     // Stop the animation by setting the 'animation' to 'none'
     dots.forEach((dot, index) => {
@@ -66,11 +69,20 @@ function stopLoading() {
     });
 
     // After animation finishes, reveal content
-    /*setTimeout(() => {
+    let fade_delay = 800;
+    setTimeout(() => {
         document.querySelector('.loader-container').style.display = 'none';
         content.classList.remove('hidden');
         content.classList.add('reveal');
-    }, 800); // Adjust this timeout to match your animation duration*/
+    }, fade_delay); // Adjust this timeout to match your animation duration
+
+    // Type out the content like CHATGPT LOL :> hehe (classy css)
+    let letter_delay = 50;
+    for (let i = 0; i < text.length; i++) {
+        setTimeout(() => {
+            content.textContent += text[i];
+        }, letter_delay * i + 0.75*fade_delay);
+    }
 }
   
 // Trigger the loading stop after a delay
