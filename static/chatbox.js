@@ -43,3 +43,46 @@ function sendMessageToServer(message) {
     })
     .catch(error => console.error("Error sending message:", error));
 }
+
+
+
+
+
+// Loading Animation Functionality
+
+function stopLoading() {
+    const dots = document.querySelectorAll('.dot');
+
+    // Stop the animation by setting the 'animation' to 'none'
+    dots.forEach((dot, index) => {
+        // Set a delay for each dot's animation (e.g., index * 200ms)
+        const delay = index * 200; // 200ms delay for each dot
+      
+        // Use setTimeout to delay the addition of the animation
+        setTimeout(() => {
+            // Linear animation
+            dot.style.animation = `flyRight 1s ease-out forwards, fadeOut 1s ease ${delay / 1000}s forwards`;
+        }, delay); // Delay is in milliseconds
+    });
+
+    // After animation finishes, reveal content
+    /*setTimeout(() => {
+        document.querySelector('.loader-container').style.display = 'none';
+        content.classList.remove('hidden');
+        content.classList.add('reveal');
+    }, 800); // Adjust this timeout to match your animation duration*/
+}
+  
+// Trigger the loading stop after a delay
+setTimeout(stopLoading, 1000);
+
+// Add keyframes dynamically for flyRight
+const style = document.createElement('style');
+style.textContent = `
+@keyframes flyRight {
+to {
+    transform: translateX(300px);
+    opacity: 0;
+}
+}`;
+document.head.appendChild(style);  

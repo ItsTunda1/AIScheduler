@@ -158,3 +158,73 @@ body {
 
     resize: none;   /* No resize*/
 }
+
+
+
+
+
+
+
+
+/* Cool Loading Effect */
+
+:root {
+    --loading-dot-dist: 35px;
+}
+
+.loader-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+  
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #00ffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#dot1 {
+    transform: rotate(0deg) translateX(var(--loading-dot-dist));
+    animation: spin1 0.6s linear infinite;
+}
+#dot2 {
+    transform: rotate(120deg) translateX(var(--loading-dot-dist));
+    animation: spin2 0.6s linear infinite;
+}
+#dot3 {
+    transform: rotate(240deg) translateX(var(--loading-dot-dist));
+    animation: spin3 0.6s linear infinite;
+}
+  
+/* Independent rotations for each dot */
+@keyframes spin1 {
+    0% {
+      transform: rotate(0deg) translateX(35px);
+    }
+    100% {
+      transform: rotate(-360deg) translateX(35px);
+    }
+  }
+  
+@keyframes spin2 {
+    0% {
+      transform: rotate(120deg) translateX(35px);
+    }
+    100% {
+      transform: rotate(calc(-360deg + 120deg)) translateX(35px);
+    }
+  }
+  
+@keyframes spin3 {
+    0% {
+      transform: rotate(240deg) translateX(35px);
+    }
+    100% {
+      transform: rotate(calc(-360deg + 240deg)) translateX(35px);
+    }
+}
