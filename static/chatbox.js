@@ -123,7 +123,4 @@ function startLoading() {
     dots.forEach((dot, index) => {
     dot.style.animation = `orbit${index + 1} 0.6s linear infinite`;
     });
-
-    // Simulate loading time, then stop and transition
-    setTimeout(() => stopLoading(), 1000); // ← your loading duration
 }
