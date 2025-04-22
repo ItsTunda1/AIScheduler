@@ -1,0 +1,160 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.menu {
+    position: fixed;
+    top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 650px; /* Space between buttons and calendar */
+}
+
+.prev, .next {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.prev::before {
+    content: "⬅"; /* Unicode left arrow */
+    padding-right: 50%;
+}
+
+.next::before {
+    content: "➡"; /* Unicode right arrow */
+    padding-left: 50%;
+}
+
+
+
+.cal-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align both elements to the top */
+
+    position: relative;
+    top: -100px;
+    left: 125px;
+}
+
+.calender {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for a weekly calendar */
+    gap: 5px; /* Adjust spacing between grid cells */
+    width: 800px;
+
+}
+
+.gridcell {
+    background-color: lightgray;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    flex-direction: column; /* Stack blocks vertically */
+    position: relative;
+    height: 500px; /* Adjust height as needed */
+    padding: 10px;
+    overflow: hidden; /* Prevent blocks from overflowing out of the cell */
+}
+
+.time-block {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    text-align: center;
+    position: absolute;
+    margin: 10px;
+    height: 10%; /* Example height, can be dynamically adjusted */
+    box-sizing: border-box; /* Ensure padding is included in width */
+    width: calc(100% - 2*10px);
+}
+
+.time-block:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.goals {
+    background-color: white; /* Optional: Add a background for visibility */
+    border: 3px solid lightgray;
+    width: 200px; /* Adjust width for goals */
+    height: 500px; /* Same height as the calendar */
+    overflow-y: auto; /* Scroll if the content exceeds the height */
+    margin-left: 40px;
+    border-radius: 15px;
+}
+
+.goals ul {
+    padding: 10px;
+    list-style-type: none;
+}
+
+.goals ul li {
+    padding: 5px;
+}
+
+
+
+
+
+
+
+
+
+.chatbox-wrapper {
+    display: flex;
+    justify-content: center; /* Align the input to the center horizontally */
+    align-items: flex-start; /* Align the input to the top vertically */
+    width: 500px;
+    position: fixed;
+    top: 650px;
+}
+
+.responsebox {
+    position: fixed;
+    top: 650px;
+    border-radius: 15px;
+    width: 500px;
+    height: 100px;
+    background-color: lightgray;
+    border: 0;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    box-sizing: border-box;
+    text-align: left; /* Align the text to the left */
+    margin: 0;
+
+    resize: none;   /* No resize*/
+    pointer-events: none;  /* Disable any interaction with the textarea */
+    user-select: text;  /* Allow text selection */
+}
+
+.chatbox {
+    position: fixed;
+    top: 775px;
+    border-radius: 15px;
+    width: 300px;
+    height: 50px;
+    background-color: lightgray;
+    border: 0;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    box-sizing: border-box;
+    text-align: left; /* Align the text to the left */
+    margin: 0;
+
+    resize: none;   /* No resize*/
+}
