@@ -11,6 +11,9 @@ document.getElementById("chatbox").addEventListener("keydown", function(event) {
             let message = document.getElementById("chatbox").value.trim();
 
             if (message) {
+                //Start loading
+                startLoading();
+
                 // Send the message to the server (Python backend)
                 sendMessageToServer(message);
                 console.log("Message (js): " + message)
@@ -25,6 +28,7 @@ document.getElementById("chatbox").addEventListener("keydown", function(event) {
 function updateChat(chat_resp) {
     // Show it to the user
     document.querySelector('.content').textContent = chat_resp;
+    stopLoading();
 }
 
 // Function to send the message to the Python server (API)
@@ -55,7 +59,15 @@ function sendMessageToServer(message) {
 // Loading Animation Functionality
 let done_loading = true;
 
-function stopLoading() {
+// Helper function to delay (stop loading)
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function stopLoading() {
+    //Wait at least 1 sec
+    await delay(300);
+
     const dots = document.querySelectorAll('.dot');
     const content = document.querySelector('.content');
     const text = content.textContent
@@ -97,8 +109,9 @@ function stopLoading() {
 
             //Set the loading to be done on the last letter
             if (i == text.length - 1) {
+                //Hide loading
+                loader.style.visibility = 'hidden';
                 done_loading = true;
-                console.log(done_loading)
             }
         }, letter_delay * i + 0.75*fade_delay);
     }
@@ -107,11 +120,13 @@ function stopLoading() {
 function startLoading() {
     //Set done loading to false
     done_loading = false;
-    console.log(done_loading)
 
     const loader = document.querySelector('.loader-container');
     const content = document.querySelector('.content');
     const dots = document.querySelectorAll('.dot');
+
+    //Show loading
+    loader.style.visibility = 'visible';
 
     // Reset states
     content.classList.remove('reveal');
@@ -124,3 +139,12 @@ function startLoading() {
     dot.style.animation = `orbit${index + 1} 0.6s linear infinite`;
     });
 }
+
+// Reset states
+const loader = document.querySelector('.loader-container');
+const content = document.querySelector('.content');
+const dots = document.querySelectorAll('.dot');
+content.classList.remove('reveal');
+content.classList.add('hidden');
+loader.style.display = 'block';
+loader.classList.remove('fade-out');
