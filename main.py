@@ -3,29 +3,14 @@ import json
 import random
 
 # Deepseek
-import deepseekDirect as chatbot
-
-
-
-"""
-Send data to calender.js
-"""
-# Example events
-event_pool = [
-    {"date": "2025-04-01", "event": "Meeting with Bob"},
-    {"date": "2025-04-02", "event": "Doctor's Appointment"},
-    {"date": "2025-04-03", "event": "Project Deadline"},
-    {"date": "2025-04-04", "event": "Family Dinner"},
-    {"date": "2025-04-05", "event": "Gym Session"},
-    {"date": "2025-04-06", "event": "Coffee with Alice"},
-]
+#import deepseekDirect as chatbot
 
 
 
 
 
 """
-Get data from chatbox.js
+Get data from chatbox.js & Send data to calender.js
 """
 prompt = """
 ### Instructions:
@@ -42,13 +27,13 @@ def receive_message():
 
     # You can process the message here (e.g., save to a database, send a response, etc.)
     print(f"Received message: {message}")
-
-    # Send data to calender.js
-    # Get calendar data
-    selected_events = random.sample(event_pool, 3)  # Random events
     
     # Send a message to the bot
-    chat_resp = str(chatbot.chat(prompt + message)['message']['content'].split('</think>\n\n')[1])
+    #chat_resp = str(chatbot.chat(prompt + message)['message']['content'].split('</think>\n\n')[1])
+    chat_resp = "no ai"
+
+    selected_events = [{"day": "Friday", "start": "0:00 AM", "end": "12:00 PM", "event": "Meeting with Bob"},
+                       {"day": "Sunday", "start": "12:00 PM", "end": "6:00 PM", "event": "Meeting with Bob"},]
 
     # Prepare the response containing both chat and calendar data
     response.content_type = 'application/json'

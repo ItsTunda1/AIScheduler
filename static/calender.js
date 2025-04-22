@@ -4,7 +4,7 @@
 // Function to adjust the size of existing time blocks
 function adjustTimeBlockHeights() {
     // Loop through each day in the calendar
-    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(day => {
+    ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].forEach(day => {
         const dayCell = document.querySelector(`.gridcell[data-day="${day}"]`);
 
         /*//Create the time block
@@ -81,5 +81,25 @@ adjustTimeBlockHeights();
 
 // Function to update the calendar with events
 function updateCalendar(events) {
-    console.log(events)
+    console.log("Events:", events)
+
+    // Add each new item
+    events.forEach(event => {
+        //Create the time block
+        const timeBlock = document.createElement("div");
+        timeBlock.classList.add("time-block");
+        st = event.start
+        end = event.end
+        timeBlock.setAttribute("data-start", st);
+        timeBlock.setAttribute("data-end", end);
+        timeBlock.textContent = st + " - " + end;
+        const day = event.day
+        const dayCell = document.querySelector(`.gridcell[data-day="${day}"]`);
+        // Delete old
+        dayCell.replaceChildren()
+        // Add new
+        dayCell.appendChild(timeBlock);
+    });
+
+    adjustTimeBlockHeights()
 }
