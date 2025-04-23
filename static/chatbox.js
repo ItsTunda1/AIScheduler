@@ -90,7 +90,7 @@ async function stopLoading() {
     let fade_delay = 800;
     setTimeout(() => {
         //content.classList.remove('hidden');
-        content_tmp.classList.add('reveal');
+        //content_tmp.classList.add('reveal');
     }, fade_delay); // Adjust this timeout to match your animation duration
 
     // Type out the content like CHATGPT LOL :> hehe (classy css)
