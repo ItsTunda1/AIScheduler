@@ -5,6 +5,9 @@ import random
 # Deepseek
 import deepseekDirect as chatbot
 
+# Bart
+import summarize as sum
+
 
 
 
@@ -49,7 +52,8 @@ def receive_message():
     print(f"Received message: {message}")
     
     # Send a message to the bot
-    ai_resp = chatbot.chat(obj_prompt.format(message))
+    #ai_resp = chatbot.chat(obj_prompt.format(message))
+    ai_resp = sum.summarize(message)
     print("AI response:", ai_resp)
     chat_resp = str(ai_resp['message']['content'].split('</think>\n\n')[1])
     #chat_resp = "no ai"
