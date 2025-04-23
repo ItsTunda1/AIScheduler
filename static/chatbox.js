@@ -43,7 +43,11 @@ function sendMessageToServer(message) {
     .then(data => {
         console.log("Message sent successfully:", data);
         console.log("Bot Response:", data.chatresp)
+        console.log("Objectives:", data.objectives)
+        //Show Chat
         updateChat(data.chatresp)
+        //Add Objectives
+        addItems(data.objectives)
         
         // Call the function from calendar.js to update the calendar with the events
         updateCalendar(data.events);  // This will update the calendar with the events received
@@ -139,3 +143,30 @@ const loader = document.querySelector('.loader-container');
 const dots = document.querySelectorAll('.dot');
 loader.style.display = 'block';
 loader.classList.remove('fade-out');
+
+
+
+
+
+
+// Objective List Functions
+function addItems(data) {
+    const ul = document.getElementById("goalList");
+    const input = document.getElementById("itemInput");
+
+    if (data !== "") {
+        const li = document.createElement("li");
+        li.textContent = data;
+        ul.appendChild(li);
+        input.value = ""; // Clear the input field
+    }
+}
+
+function removeLastItem() {
+    const ul = document.getElementById("goalList");
+    const lastItem = ul.lastElementChild;
+    
+    if (lastItem) {
+        ul.removeChild(lastItem);
+    }
+}
