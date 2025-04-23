@@ -152,13 +152,11 @@ loader.classList.remove('fade-out');
 // Objective List Functions
 function addItems(data) {
     const ul = document.getElementById("goalList");
-    const input = document.getElementById("itemInput");
 
     if (data !== "") {
         const li = document.createElement("li");
         li.textContent = data;
         ul.appendChild(li);
-        input.value = ""; // Clear the input field
     }
 }
 

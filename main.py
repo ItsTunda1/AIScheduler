@@ -80,8 +80,8 @@ def receive_message():
     
     # Send a message to the bot
     obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
-    #chat_resp = str(ai_resp['message']['content'].split('</think>\n\n')[1])
-    chat_resp = "no ai"
+    chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
+    #chat_resp = "no ai"
 
     selected_events = [{"day": "Friday", "start": "0:00 AM", "end": "12:00 PM", "event": "Meeting with Bob"},
                        {"day": "Sunday", "start": "12:00 PM", "end": "6:00 PM", "event": "Meeting with Bob"},]
