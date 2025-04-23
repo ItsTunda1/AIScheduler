@@ -18,10 +18,11 @@ Get data from chatbox.js & Send data to calender.js
 # Prompt for the objectives generator
 obj_prompt = """
 ### Instructions:
-You are a scheduling assistant. The user will give you time blocks of events and you will help take notes on important points.
+You are a scheduling assistant. The user will give you events and you will help take notes on important points.
 Be very careful not modify the times provided or hallucinate any events.
 Take notes and list the goals provided by the user as short bullet points.
-Such goals could be; how often, late, or early they want a class. If they want classes on certian days. Short vs longer classes, etc.
+Example bullet points include; late events, early events, no events on mondays, 3 hours between events A and B, etc.
+Feel free to make up your own bullet points if needed or modify the current options. Just make sure to keep bullet points short.
 
 ### User Prompt:
 {}
@@ -52,9 +53,10 @@ def receive_message():
     print(f"Received message: {message}")
     
     # Send a message to the bot
-    #ai_resp = chatbot.chat(obj_prompt.format(message))
-    ai_resp = sum.summarize(message)
+    ai_resp = chatbot.chat(obj_prompt.format(message))
+    #ai_resp = sum.summarize(message)
     print("AI response:", ai_resp)
+    #chat_resp = ai_resp[0]['summary_text']
     chat_resp = str(ai_resp['message']['content'].split('</think>\n\n')[1])
     #chat_resp = "no ai"
 
