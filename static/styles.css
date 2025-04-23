@@ -8,7 +8,7 @@ body {
 
 .menu {
     position: fixed;
-    top: 25px;
+    top: 0px;
     display: flex;
     align-items: center;
     gap: 650px; /* Space between buttons and calendar */
@@ -40,7 +40,7 @@ body {
     align-items: flex-start; /* Align both elements to the top */
 
     position: relative;
-    top: -100px;
+    top: -150px;
     left: 125px;
 }
 
@@ -121,10 +121,10 @@ body {
 
 .responsebox {
     position: fixed;
-    top: 650px;
+    top: 590px;
     border-radius: 15px;
-    width: 500px;
-    height: 100px;
+    width: 700px;
+    height: 150px;
     background-color: lightgray;
     border: 0;
     padding: 10px;
@@ -142,10 +142,10 @@ body {
 
 .chatbox {
     position: fixed;
-    top: 775px;
+    top: 760px;
     border-radius: 15px;
-    width: 300px;
-    height: 50px;
+    width: 500px;
+    height: 75px;
     background-color: lightgray;
     border: 0;
     padding: 10px;
@@ -178,8 +178,8 @@ body {
     position: absolute;
     /*top: 50%;
     left: 40%;*/
-    left: -50px;
-    top: -50px;
+    left: -150px;
+    top: -110px;
     width: 100px;
     height: 100px;
     z-index: 10;
@@ -280,9 +280,9 @@ body {
 /* Text Box */
 .content {
     position: fixed;
-    top: 650px;
-    width: 500px;
-    height: 100px;
+    top: 590px;
+    width: 700px;
+    height: 150px;
     padding: 10px;
     font-family: Arial, sans-serif;
     font-size: 14px;

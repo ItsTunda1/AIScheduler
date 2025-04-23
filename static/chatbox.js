@@ -65,13 +65,15 @@ function delay(ms) {
 }
 
 async function stopLoading() {
-    //Wait at least 1 sec
+    //Wait at least 0.3 sec
     await delay(300);
 
     const dots = document.querySelectorAll('.dot');
-    const content = document.querySelector('.content');
-    const text = content.textContent
-    content.textContent = ""
+    const content_tmp = document.querySelector('.content');     //Temp
+    const content = document.querySelector('.responsebox');     //Text Area
+    const text = content_tmp.textContent;
+    content_tmp.textContent = "";
+    content.textContent = "";
 
     // Stop the animation by setting the 'animation' to 'none'
     dots.forEach((dot, index) => {
@@ -90,21 +92,22 @@ async function stopLoading() {
     let fade_delay = 800;
     setTimeout(() => {
         //content.classList.remove('hidden');
-        content.classList.add('reveal');
+        content_tmp.classList.add('reveal');
     }, fade_delay); // Adjust this timeout to match your animation duration
 
     // Type out the content like CHATGPT LOL :> hehe (classy css)
-    let letter_delay = 50;
+    let letter_delay = 20;
     for (let i = 0; i < text.length; i++) {
         setTimeout(() => {
-            content.textContent += text[i];
+            content_tmp.textContent += text[i];
+            content.textContent = content_tmp.textContent;
 
             // Remove the dots
             if (letter_delay * i >= 200) {
                 const loader = document.querySelector('.loader-container');
                 // Start fade out animation
                 loader.classList.add('fade-out');
-                content.classList.remove('hidden');
+                content_tmp.classList.remove('hidden');
             }
 
             //Set the loading to be done on the last letter
@@ -112,6 +115,9 @@ async function stopLoading() {
                 //Hide loading
                 loader.style.visibility = 'hidden';
                 done_loading = true;
+
+                // Remove temp content
+                content_tmp.textContent = ""
             }
         }, letter_delay * i + 0.75*fade_delay);
     }

@@ -14,7 +14,7 @@ Get data from chatbox.js & Send data to calender.js
 """
 prompt = """
 ### Instructions:
-You are a scheduling assistant. The user will give you time blocks of events and you will help organize it based on their criteria. Send the best schedule based on the criteria. Be very careful not modify the times provided. Try to reduce any scheduling conflicts if possible. If not possible tell the user about the dilemma.
+You are a scheduling assistant. The user will give you time blocks of events and you will help organize it based on their criteria. Send the best schedule based on the criteria. Be very careful not modify the times provided or hallucinate any events. Try to reduce any scheduling conflicts if possible. If not possible tell the user about the dilemma.
 
 ### User Prompt:
 """
