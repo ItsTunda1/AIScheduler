@@ -27,6 +27,8 @@ document.getElementById("chatbox").addEventListener("keydown", function(event) {
 
 function updateChat(chat_resp) {
     // Show it to the user
+    chat_resp += chat_resp;
+    chat_resp += chat_resp;
     document.querySelector('.content').textContent = chat_resp;
     stopLoading();
 }
@@ -103,11 +105,16 @@ async function stopLoading() {
             content.textContent = content_tmp.textContent;
 
             // Remove the dots
-            if (letter_delay * i >= 200) {
+            if (letter_delay * i >= 200 && letter_delay * i <= 200 + i) {
                 const loader = document.querySelector('.loader-container');
                 // Start fade out animation
                 loader.classList.add('fade-out');
                 content_tmp.classList.remove('hidden');
+            }
+
+            //Hide the temp later
+            if (letter_delay * i >= 250) {
+                content_tmp.classList.add('hidden');
             }
 
             //Set the loading to be done on the last letter
@@ -115,9 +122,6 @@ async function stopLoading() {
                 //Hide loading
                 loader.style.visibility = 'hidden';
                 done_loading = true;
-
-                // Remove temp content
-                content_tmp.textContent = ""
             }
         }, letter_delay * i + 0.75*fade_delay);
     }
