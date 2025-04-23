@@ -27,9 +27,7 @@ document.getElementById("chatbox").addEventListener("keydown", function(event) {
 
 function updateChat(chat_resp) {
     // Show it to the user
-    chat_resp += chat_resp;
-    chat_resp += chat_resp;
-    document.querySelector('.content').textContent = chat_resp;
+    document.querySelector('.responsebox').textContent = chat_resp;
     stopLoading();
 }
 
@@ -71,10 +69,8 @@ async function stopLoading() {
     await delay(300);
 
     const dots = document.querySelectorAll('.dot');
-    const content_tmp = document.querySelector('.content');     //Temp
     const content = document.querySelector('.responsebox');     //Text Area
-    const text = content_tmp.textContent;
-    content_tmp.textContent = "";
+    const text = content.textContent;
     content.textContent = "";
 
     // Stop the animation by setting the 'animation' to 'none'
@@ -101,20 +97,13 @@ async function stopLoading() {
     let letter_delay = 20;
     for (let i = 0; i < text.length; i++) {
         setTimeout(() => {
-            content_tmp.textContent += text[i];
-            content.textContent = content_tmp.textContent;
+            content.textContent += text[i];
 
             // Remove the dots
-            if (letter_delay * i >= 200 && letter_delay * i <= 200 + i) {
+            if (letter_delay * i >= 200) {
                 const loader = document.querySelector('.loader-container');
                 // Start fade out animation
                 loader.classList.add('fade-out');
-                content_tmp.classList.remove('hidden');
-            }
-
-            //Hide the temp later
-            if (letter_delay * i >= 250) {
-                content_tmp.classList.add('hidden');
             }
 
             //Set the loading to be done on the last letter
@@ -132,15 +121,12 @@ function startLoading() {
     done_loading = false;
 
     const loader = document.querySelector('.loader-container');
-    const content = document.querySelector('.content');
     const dots = document.querySelectorAll('.dot');
 
     //Show loading
     loader.style.visibility = 'visible';
 
     // Reset states
-    content.classList.remove('reveal');
-    content.classList.add('hidden');
     loader.style.display = 'block';
     loader.classList.remove('fade-out');
 
@@ -152,9 +138,6 @@ function startLoading() {
 
 // Reset states
 const loader = document.querySelector('.loader-container');
-const content = document.querySelector('.content');
 const dots = document.querySelectorAll('.dot');
-content.classList.remove('reveal');
-content.classList.add('hidden');
 loader.style.display = 'block';
 loader.classList.remove('fade-out');
