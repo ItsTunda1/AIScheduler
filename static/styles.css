@@ -83,22 +83,53 @@ body {
     background-color: #45a049; /* Darker green on hover */
 }
 
+
+/* Goals */
 .goals {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Personal Goals */
+.per-goals {
     background-color: white; /* Optional: Add a background for visibility */
     border: 3px solid lightgray;
     width: 200px; /* Adjust width for goals */
-    height: 500px; /* Same height as the calendar */
+    height: 180px; /* Same height as the calendar */
     overflow-y: auto; /* Scroll if the content exceeds the height */
     margin-left: 40px;
     border-radius: 15px;
+    padding: 10px;
 }
 
-.goals ul {
+.per-goals ul {
     padding: 10px;
     list-style-type: none;
 }
 
-.goals ul li {
+.per-goals ul li {
+    padding: 5px;
+}
+
+/* Event Times */
+.event-goals {
+    background-color: white; /* Optional: Add a background for visibility */
+    border: 3px solid lightgray;
+    width: 200px; /* Adjust width for goals */
+    height: 280px; /* Same height as the calendar */
+    overflow-y: auto; /* Scroll if the content exceeds the height */
+    margin-left: 40px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.event-goals ul {
+    padding: 10px;
+    list-style-type: none;
+}
+
+.event-goals ul li {
     padding: 5px;
 }
 

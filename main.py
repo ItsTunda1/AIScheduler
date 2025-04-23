@@ -6,7 +6,7 @@ import random
 import deepseekDirect as chatbot
 
 # Bart
-import summarize as sum
+#import summarize as sum
 
 
 
@@ -31,7 +31,7 @@ Your output must have two parts:
 - Do not "correct" times to match a pattern or make them evenly spaced.
 - If unsure, copy the user’s wording exactly.
 
-Your output should look like:
+Your output should look like: (write titles exactly)
 - User preferences:
   - [user’s stated goals]
 - Event options:
@@ -76,10 +76,16 @@ def receive_message():
     message = data.get('message')
 
     # You can process the message here (e.g., save to a database, send a response, etc.)
-    print(f"Received message: {message}")
+    #print(f"Received message: {message}")
     
-    # Send a message to the bot
+    # Get Objectives
     obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
+    # Run the parser
+    prefs, events = parse_schedule_input(obj_resp)
+    #print("Preferences:", prefs)
+    #print("Event Options:", events)
+
+    # Make Schedule
     chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
     #chat_resp = "no ai"
 
@@ -92,7 +98,7 @@ def receive_message():
         "status": "success",
         "message": message,
         "events": selected_events,
-        "objectives": obj_resp,
+        "objectives": [prefs, events],
         "chatresp": chat_resp
     })
 
@@ -101,6 +107,30 @@ Example:
 Class A starts at either 12:00 or 3:00. Class B starts at either 3:00 or 5:00. I want late classes.
 """
 
+def parse_schedule_input(text):
+    # Normalize dashes and spacing
+    text = text.replace(" -", "-")  # remove space before dashes
+    parts = text.split("- ")
+    parts = [p.strip() for p in parts if p.strip()]
+
+    preferences = []
+    events = []
+    mode = None
+
+    for part in parts:
+        if "user preferences" in part.lower():
+            mode = "preferences"
+            continue
+        elif "event options" in part.lower():
+            mode = "events"
+            continue
+
+        if mode == "preferences":
+            preferences.append(part)
+        elif mode == "events":
+            events.append(part)
+
+    return preferences, events
 
 
 

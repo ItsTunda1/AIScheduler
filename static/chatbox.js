@@ -151,17 +151,25 @@ loader.classList.remove('fade-out');
 
 // Objective List Functions
 function addItems(data) {
-    const ul = document.getElementById("goalList");
+    const per_ul = document.getElementById("perList");
 
-    if (data !== "") {
+    if (data[0] !== "") {
         const li = document.createElement("li");
-        li.textContent = data;
-        ul.appendChild(li);
+        li.textContent = data[0];
+        per_ul.appendChild(li);
+    }
+
+    const sch_ul = document.getElementById("eventList");
+
+    if (data[1] !== "") {
+        const li = document.createElement("li");
+        li.textContent = data[1];
+        sch_ul.appendChild(li);
     }
 }
 
 function removeLastItem() {
-    const ul = document.getElementById("goalList");
+    const ul = document.getElementById("perList");
     const lastItem = ul.lastElementChild;
     
     if (lastItem) {
