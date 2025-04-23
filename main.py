@@ -18,22 +18,25 @@ Get data from chatbox.js & Send data to calender.js
 # Prompt for the objectives generator
 obj_prompt = """
 ### Instructions:
-You are a scheduling assistant. The user will give you events, and you will help take structured notes on them.
+You are a scheduling assistant. The user will give you events, and you will take structured notes.
 
-You must:
-- List the user's **preferences or goals** first.
-- Then, summarize all **provided event details**, including all time options.
-- DO NOT modify times or hallucinate new events.
-- DO NOT choose a time unless the user explicitly says so.
-- Keep bullet points short and factual.
-- If no goal is stated, leave the goal section blank.
+Your output must have two parts:
+1. **User preferences** — summarize user-stated goals (e.g., “late classes”, “avoid Mondays”).
+2. **Event options** — list all provided events with ALL original time options exactly as written.
+
+⚠️ VERY IMPORTANT RULES:
+- NEVER modify, fix, or assume any time.
+- If the user says “Class A: 11:00 or 4:00”, you must repeat it exactly.
+- Even a 1-hour change is unacceptable.
+- Do not "correct" times to match a pattern or make them evenly spaced.
+- If unsure, copy the user’s wording exactly.
 
 ### Output Format:
 - User preferences:
-  - [summarized user goals, like “late classes”, “no events on Monday”]
+  - [user’s stated goals]
 - Event options:
-  - Class A: 12:00 or 3:00
-  - Class B: 3:00 or 5:00
+  - Class A: 11:00 or 4:00
+  - Class B: 4:00 or 7:00
 
 ### User Prompt:
 {}
