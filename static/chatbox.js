@@ -27,8 +27,7 @@ document.getElementById("chatbox").addEventListener("keydown", function(event) {
 
 function updateChat(chat_resp) {
     // Show it to the user
-    document.querySelector('.responsebox').textContent = chat_resp;
-    stopLoading();
+    stopLoading(chat_resp);
 }
 
 // Function to send the message to the Python server (API)
@@ -64,13 +63,12 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function stopLoading() {
+async function stopLoading(text) {
     //Wait at least 0.3 sec
     await delay(300);
 
     const dots = document.querySelectorAll('.dot');
     const content = document.querySelector('.responsebox');     //Text Area
-    const text = content.textContent;
     content.textContent = "";
 
     // Stop the animation by setting the 'animation' to 'none'
