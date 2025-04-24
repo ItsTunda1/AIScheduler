@@ -82,10 +82,10 @@ def receive_message_obj():
     #print(f"Received message: {message}")
     
     # Get Objectives
-    #obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
+    obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
     # Run the parser
-    #prefs, events = parse_schedule_input(obj_resp)
-    prefs, events = ["", ""]
+    prefs, events = parse_schedule_input(obj_resp)
+    #prefs, events = ["", ""]
 
     # Prepare the response containing both chat and calendar data
     response.content_type = 'application/json'
@@ -104,14 +104,9 @@ def receive_message_sch():
     obj_resp = data.get('objectives')
 
     # Make Schedule
-    #chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
+    chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
 
     # Parse the event times
-    chat_resp = """
-### Final Schedule:
-- Calc2: Monday - 3:00 PM - 6:00 PM
-- W131: Monday - 7:00 PM - 10:00 PM
-"""
     selected_events = ParseEvents(chat_resp)
 
     # Reformat as dictionary
