@@ -45,7 +45,7 @@ function adjustTimeBlockHeights() {
                 const blockHeightPercentage = (duration / 8) * 100/3 - 2; // Divide by 3 idk why ( and the minus 2 is for spacing of the day cell)
 
                 // Calculate the top offset based on the block's start time
-                const offsetFromDayStart = startHour*11.7;  // 11.7 is for offset
+                const offsetFromDayStart = startHour*11.2;  // 11.2 is for offset
                 let topOffsetPercentage = (offsetFromDayStart / 24) * 100/12;
 
                 // Set the block height based on the calculated percentage
@@ -100,7 +100,7 @@ function updateCalendar(events) {
         end = event.end;
         timeBlock.setAttribute("data-start", st);
         timeBlock.setAttribute("data-end", end);
-        timeBlock.textContent = st + " - " + end;
+        timeBlock.textContent = event.event;
         const day = event.day;
         const dayCell = document.querySelector(`.gridcell[data-day="${day}"]`);
         // Add new
