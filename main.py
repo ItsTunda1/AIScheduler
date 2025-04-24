@@ -61,8 +61,8 @@ Try to:
 At the end, present:
 1. A finalized schedule, seperated by newlines, with the title ### Final Schedule: Events labeled as [Event]: [Start] - [End]
 Example:
-- Name1: Day - 12:00 PM - 3:00 PM
-- Name2: Day - 4:00 PM - 6:00 PM
+- Name: Day - 12:00 PM - 3:00 PM
+- Name: Day - 4:00 PM - 6:00 PM
 2. A brief rationale explaining how user preferences were considered or where trade-offs were made
 
 ### Objectives:
