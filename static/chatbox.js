@@ -31,8 +31,11 @@ function updateChat(chat_resp) {
 }
 
 // Function to send the message to the Python server (API)
+// Gets Objectives
 function sendMessageToServer(message) {
-    fetch("/api/chat", {
+    // Objectives
+    let objectives;
+    fetch("/api/objectives", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -42,12 +45,29 @@ function sendMessageToServer(message) {
     .then(response => response.json())
     .then(data => {
         console.log("Message sent successfully:", data);
-        console.log("Bot Response:", data.chatresp)
-        console.log("Objectives:", data.objectives)
-        //Show Chat
-        updateChat(data.chatresp)
+        objectives = data.objectives
+        console.log("Objectives:", objectives)
         //Add Objectives
         addItems(data.objectives)
+    })
+    .catch(error => console.error("Error sending message:", error));
+
+
+
+    // Schedule
+    fetch("/api/schedule", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message, objectives: objectives })  // Send the message as JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Message sent successfully:", data);
+        console.log("Bot Response:", data.chatresp)
+        //Show Chat
+        updateChat(data.chatresp)
         
         // Call the function from calendar.js to update the calendar with the events
         updateCalendar(data.events);  // This will update the calendar with the events received

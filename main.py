@@ -72,8 +72,8 @@ Example:
 {}
 """
 # API route to receive messages
-@post('/api/chat')
-def receive_message():
+@post('/api/objectives')
+def receive_message_obj():
     # Get the message from the request body (JSON)
     data = request.json
     message = data.get('message')
@@ -85,12 +85,25 @@ def receive_message():
     obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
     # Run the parser
     prefs, events = parse_schedule_input(obj_resp)
-    #print("Preferences:", prefs)
-    #print("Event Options:", events)
+
+    # Prepare the response containing both chat and calendar data
+    response.content_type = 'application/json'
+    return json.dumps({
+        "status": "success",
+        "message": message,
+        "objectives": [prefs, events],
+    })
+
+# API route to receive messages
+@post('/api/schedule')
+def receive_message_sch():
+    # Get the message from the request body (JSON)
+    data = request.json
+    message = data.get('message')
+    obj_resp = data.get('objectives')
 
     # Make Schedule
     chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
-    #chat_resp = "no ai"
 
     # Parse the event times
     selected_events = ParseEvents(chat_resp)
@@ -106,13 +119,14 @@ def receive_message():
         "status": "success",
         "message": message,
         "events": formatted,
-        "objectives": [prefs, events],
         "chatresp": chat_resp
     })
 
 """
-Example:
+Examples:
+==============
 Class A starts at either 12:00 or 3:00. Class B starts at either 3:00 or 5:00. I want late classes.
+I can have calc2 at 3:00 PM or 4:00 PM. I can have W131 at 12:00 PM or 6:00 PM. Each class is 3 hours long. I want late classes.
 """
 
 def parse_schedule_input(text):
