@@ -80,28 +80,23 @@ def receive_message():
     #print(f"Received message: {message}")
     
     # Get Objectives
-    #obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
+    obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
     # Run the parser
-    #prefs, events = parse_schedule_input(obj_resp)
-    prefs, events = ["", ""]
+    prefs, events = parse_schedule_input(obj_resp)
     #print("Preferences:", prefs)
     #print("Event Options:", events)
 
     # Make Schedule
-    #chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
+    chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
     #chat_resp = "no ai"
 
     # Parse the event times
-    chat_resp = """
-### Final Schedule:
-- Class A: 3:00 PM - 6:00 PM
-- Class B: 7:00 PM - 10:00 PM
-"""
     selected_events = ParseEvents(chat_resp)
     # Reformat as dictionary
     day = "Monday"
 
     formatted = [{"day": day, "start": start, "end": end, "event": event} for event, start, end in selected_events]
+    print(formatted)
 
     # Prepare the response containing both chat and calendar data
     response.content_type = 'application/json'
@@ -183,9 +178,13 @@ def ParseEvents(chat_resp):
             event_info = line.split(": ")
             if len(event_info) == 2:
                 cls, time = event_info
-                # Split into start and end
-                start, end = time.split(" - ")
-                events.append((cls.strip(), start.strip(), end.strip()))
+                # Split into start and end (execption for no time)
+                # The error only seems to happen if you add a - in the text like calc-2
+                if (" - " in time):
+                    start, end = time.split(" - ")
+                    events.append((cls.strip(), start.strip(), end.strip()))
+                else:
+                    events.append((cls.strip(), "0:00 AM", "1:00 AM"))
 
     return events
 
