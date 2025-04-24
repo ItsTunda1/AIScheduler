@@ -77,9 +77,6 @@ def receive_message_obj():
     # Get the message from the request body (JSON)
     data = request.json
     message = data.get('message')
-
-    # You can process the message here (e.g., save to a database, send a response, etc.)
-    #print(f"Received message: {message}")
     
     # Get Objectives
     obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
@@ -205,22 +202,6 @@ def ParseEvents(chat_resp):
                 schedule_fulltimes.append([name, day, start, end])
         print("sch times", schedule_fulltimes)
         return schedule_fulltimes
-
-
-        # Remove the dash and split by ': ' (after event name)
-        #for line in schedule_fulltimes:
-        #    event_info = line.split(": ")
-        #    if len(event_info) == 2:
-        #        cls, time = event_info
-        #        # Split into start and end (execption for no time)
-        #        # The error only seems to happen if you add a - in the text like calc-2
-        #        if (" - " in time):
-        #            start, end = time.split(" - ")
-        #            events.append((cls.strip(), start.strip(), end.strip()))
-        #        else:
-        #            events.append((cls.strip(), "0:00 AM", "1:00 AM"))
-
-    #return events
 
 
 

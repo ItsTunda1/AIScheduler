@@ -7,18 +7,7 @@ function adjustTimeBlockHeights() {
     ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].forEach(day => {
         const dayCell = document.querySelector(`.gridcell[data-day="${day}"]`);
 
-        /*//Create the time block
-        const timeBlock = document.createElement("div");
-        timeBlock.classList.add("time-block");
-        st = "5:00 PM"
-        timeBlock.setAttribute("data-start", st);
-        timeBlock.setAttribute("data-end", "12:00 PM");
-        timeBlock.textContent = st + " - 12:00 PM";
-        dayCell.appendChild(timeBlock);*/
-
-
-
-
+        
 
         // Loop through each time block in the grid cell for that day
         const timeBlocks = dayCell.querySelectorAll('.time-block');
