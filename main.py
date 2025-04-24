@@ -107,6 +107,7 @@ def receive_message_sch():
 
     # Parse the event times
     selected_events = ParseEvents(chat_resp)
+    
     # Reformat as dictionary
     day = "Monday"
 
