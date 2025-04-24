@@ -159,20 +159,27 @@ function addItems(data) {
         per_ul.appendChild(li);
     }
 
-    const sch_ul = document.getElementById("eventList");
+    const event_ul = document.getElementById("eventList");
 
     if (data[1] !== "") {
         const li = document.createElement("li");
         li.textContent = data[1];
-        sch_ul.appendChild(li);
+        event_ul.appendChild(li);
     }
 }
 
 function removeLastItem() {
-    const ul = document.getElementById("perList");
-    const lastItem = ul.lastElementChild;
+    const per_ul = document.getElementById("perList");
+    const per_lastItem = per_ul.lastElementChild;
     
-    if (lastItem) {
-        ul.removeChild(lastItem);
+    if (per_lastItem) {
+        per_ul.removeChild(per_lastItem);
+    }
+
+    const event_ul = document.getElementById("eventList");
+    const event_lastItem = event_ul.lastElementChild;
+    
+    if (event_lastItem) {
+        event_lastItem_ul.removeChild(event_lastItem);
     }
 }

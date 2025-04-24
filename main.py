@@ -1,6 +1,6 @@
 from bottle import default_app, route, run, template, static_file, post, request, abort, response, error
 import json
-import random
+import re
 
 # Deepseek
 import deepseekDirect as chatbot
@@ -59,7 +59,8 @@ Try to:
 - Prioritize preferred times (e.g. “late classes”)
 
 At the end, present:
-1. A finalized schedule
+1. A finalized schedule, seperated by newlines, with the title ### Final Schedule: Events labeled as [Event]: [Start] - [End]
+Example: - Class A: 12:00 PM - 3:00 PM
 2. A brief rationale explaining how user preferences were considered or where trade-offs were made
 
 ### Objectives:
@@ -79,25 +80,35 @@ def receive_message():
     #print(f"Received message: {message}")
     
     # Get Objectives
-    obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
+    #obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
     # Run the parser
-    prefs, events = parse_schedule_input(obj_resp)
+    #prefs, events = parse_schedule_input(obj_resp)
+    prefs, events = ["", ""]
     #print("Preferences:", prefs)
     #print("Event Options:", events)
 
     # Make Schedule
-    chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
+    #chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
     #chat_resp = "no ai"
 
-    selected_events = [{"day": "Friday", "start": "0:00 AM", "end": "12:00 PM", "event": "Meeting with Bob"},
-                       {"day": "Sunday", "start": "12:00 PM", "end": "6:00 PM", "event": "Meeting with Bob"},]
+    # Parse the event times
+    chat_resp = """
+### Final Schedule:
+- Class A: 3:00 PM - 4:00 PM
+- Class B: 5:00 PM - 6:00 PM
+"""
+    selected_events = ParseEvents(chat_resp)
+    # Reformat as dictionary
+    day = "Monday"
+
+    formatted = [{"day": day, "start": start, "end": end, "event": event} for event, start, end in selected_events]
 
     # Prepare the response containing both chat and calendar data
     response.content_type = 'application/json'
     return json.dumps({
         "status": "success",
         "message": message,
-        "events": selected_events,
+        "events": formatted,
         "objectives": [prefs, events],
         "chatresp": chat_resp
     })
@@ -132,6 +143,51 @@ def parse_schedule_input(text):
 
     return preferences, events
 
+
+def ParseEvents(chat_resp):
+    events = []
+    events_raw_plus = chat_resp.split("### Final Schedule:\n")
+    if (len(events_raw_plus) > 1):
+        # Use regex to split whenever a new dash-prefixed line starts
+        entries = re.split(r'-\s*', events_raw_plus[1])
+
+        # The first entry might be text before the first dash — skip it if needed
+        # So we keep everything *after* the first item, and re-add the dash
+        schedule = ["- " + entry.strip() for entry in entries[1:]]
+        
+        # Remove extra lines (if any) after last item
+        last_item = schedule.pop()
+
+        # If it has extra cut it off and replace
+        last_item_parsed = last_item.split("\n")
+        if (len(last_item_parsed) > 1):
+            last_item = last_item_parsed[0]
+        schedule.append(last_item)
+
+        # Remove leading "-"
+        schedule_cleaned = [re.sub(r'^\s*-\s*', '', item) for item in schedule]
+
+        # Recombine end times (every other)
+        schedule_fulltimes = []
+        for i in range(len(schedule_cleaned)):
+            item = schedule_cleaned[i]
+            if (i % 2 == 0):
+                header_time = item
+            else:
+                tail_time = item
+                schedule_fulltimes.append(header_time + " - " + tail_time)
+
+
+        # Remove the dash and split by ': ' (after event name)
+        for line in schedule_fulltimes:
+            event_info = line.split(": ")
+            if len(event_info) == 2:
+                cls, time = event_info
+                # Split into start and end
+                start, end = time.split(" - ")
+                events.append((cls.strip(), start.strip(), end.strip()))
+
+    return events
 
 
 
