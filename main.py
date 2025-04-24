@@ -94,8 +94,8 @@ def receive_message():
     # Parse the event times
     chat_resp = """
 ### Final Schedule:
-- Class A: 3:00 PM - 4:00 PM
-- Class B: 5:00 PM - 6:00 PM
+- Class A: 3:00 PM - 5:00 PM
+- Class B: 5:00 PM - 7:00 PM
 """
     selected_events = ParseEvents(chat_resp)
     # Reformat as dictionary

@@ -83,23 +83,29 @@ adjustTimeBlockHeights();
 function updateCalendar(events) {
     console.log("Events:", events)
 
+    //For every day, delete old
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    days.forEach(day => {
+        const dayCell = document.querySelector(`.gridcell[data-day="${day}"]`);
+        // Delete old
+        dayCell.replaceChildren();
+    });
+
     // Add each new item
     events.forEach(event => {
         //Create the time block
         const timeBlock = document.createElement("div");
         timeBlock.classList.add("time-block");
-        st = event.start
-        end = event.end
+        st = event.start;
+        end = event.end;
         timeBlock.setAttribute("data-start", st);
         timeBlock.setAttribute("data-end", end);
         timeBlock.textContent = st + " - " + end;
-        const day = event.day
+        const day = event.day;
         const dayCell = document.querySelector(`.gridcell[data-day="${day}"]`);
-        // Delete old
-        dayCell.replaceChildren()
         // Add new
         dayCell.appendChild(timeBlock);
     });
 
-    adjustTimeBlockHeights()
+    adjustTimeBlockHeights();
 }
