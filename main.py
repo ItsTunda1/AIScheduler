@@ -127,6 +127,7 @@ Examples:
 ==============
 Class A starts at either 12:00 or 3:00. Class B starts at either 3:00 or 5:00. I want late classes.
 I can have calc2 at 3:00 PM or 4:00 PM. I can have W131 at 12:00 PM or 6:00 PM. Each class is 3 hours long. I want late classes.
+I can have calc2 at 3:00 PM or 4:00 PM. I can have W131 at 12:00 PM or 7:00 PM. Each class is 3 hours long. I want classes after 12:00 PM. Both classes are on Wednesday. The I have a 3rd class called AI that is only on Mondays at 1:00 PM.
 """
 
 def parse_schedule_input(text):
