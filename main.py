@@ -61,8 +61,8 @@ Try to:
 At the end, present:
 1. A finalized schedule, seperated by newlines, with the title ### Final Schedule: Events labeled as [Event]: [Start] - [End]
 Example:
-- Name1(Day): 12:00 PM - 3:00 PM
-- Name2(Day): 4:00 PM - 6:00 PM
+- Name1: Day - 12:00 PM - 3:00 PM
+- Name2: Day - 4:00 PM - 6:00 PM
 2. A brief rationale explaining how user preferences were considered or where trade-offs were made
 
 ### Objectives:
@@ -82,9 +82,10 @@ def receive_message_obj():
     #print(f"Received message: {message}")
     
     # Get Objectives
-    obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
+    #obj_resp = str(chatbot.chat(obj_prompt.format(message))['message']['content'].split('</think>\n\n')[1])
     # Run the parser
-    prefs, events = parse_schedule_input(obj_resp)
+    #prefs, events = parse_schedule_input(obj_resp)
+    prefs, events = ["", ""]
 
     # Prepare the response containing both chat and calendar data
     response.content_type = 'application/json'
@@ -103,15 +104,18 @@ def receive_message_sch():
     obj_resp = data.get('objectives')
 
     # Make Schedule
-    chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
+    #chat_resp = str(chatbot.chat(sch_prompt.format(obj_resp, message))['message']['content'].split('</think>\n\n')[1])
 
     # Parse the event times
+    chat_resp = """
+### Final Schedule:
+- Calc2: Monday - 3:00 PM - 6:00 PM
+- W131: Monday - 7:00 PM - 10:00 PM
+"""
     selected_events = ParseEvents(chat_resp)
 
     # Reformat as dictionary
-    day = "Monday"
-
-    formatted = [{"day": day, "start": start, "end": end, "event": event} for event, start, end in selected_events]
+    formatted = [{"day": day, "start": start, "end": end, "event": event} for event, day, start, end in selected_events]
     print(formatted)
 
     # Prepare the response containing both chat and calendar data
@@ -157,7 +161,7 @@ def parse_schedule_input(text):
 
 
 def ParseEvents(chat_resp):
-    events = []
+    #events = []
     events_raw_plus = chat_resp.split("### Final Schedule:\n")
     if (len(events_raw_plus) > 1):
         # Use regex to split whenever a new dash-prefixed line starts
@@ -165,45 +169,62 @@ def ParseEvents(chat_resp):
 
         # The first entry might be text before the first dash — skip it if needed
         # So we keep everything *after* the first item, and re-add the dash
-        schedule = ["- " + entry.strip() for entry in entries[1:]]
+        schedule_raw = ["- " + entry.strip() for entry in entries[1:]]
         
         # Remove extra lines (if any) after last item
-        last_item = schedule.pop()
+        last_item = schedule_raw.pop()
 
         # If it has extra cut it off and replace
         last_item_parsed = last_item.split("\n")
         if (len(last_item_parsed) > 1):
             last_item = last_item_parsed[0]
-        schedule.append(last_item)
+        schedule_raw.append(last_item)
+
+        # Get day
+        schedule = []
+        for item in schedule_raw:
+            split = item.split(": ")
+            if (len(split) > 1):
+                schedule.append(split[0])
+                schedule.append(split[1])
+            else:
+                schedule.append(item)
 
         # Remove leading "-"
         schedule_cleaned = [re.sub(r'^\s*-\s*', '', item) for item in schedule]
+        print("sch cleaned", schedule_cleaned)
 
         # Recombine end times (every other)
         schedule_fulltimes = []
         for i in range(len(schedule_cleaned)):
             item = schedule_cleaned[i]
-            if (i % 2 == 0):
-                header_time = item
+            if (i % 4 == 0):
+                name = item
+            elif (i % 4 == 1):
+                day = item
+            elif (i % 4 == 2):
+                start = item
             else:
-                tail_time = item
-                schedule_fulltimes.append(header_time + " - " + tail_time)
+                end = item
+                schedule_fulltimes.append([name, day, start, end])
+        print("sch times", schedule_fulltimes)
+        return schedule_fulltimes
 
 
         # Remove the dash and split by ': ' (after event name)
-        for line in schedule_fulltimes:
-            event_info = line.split(": ")
-            if len(event_info) == 2:
-                cls, time = event_info
-                # Split into start and end (execption for no time)
-                # The error only seems to happen if you add a - in the text like calc-2
-                if (" - " in time):
-                    start, end = time.split(" - ")
-                    events.append((cls.strip(), start.strip(), end.strip()))
-                else:
-                    events.append((cls.strip(), "0:00 AM", "1:00 AM"))
+        #for line in schedule_fulltimes:
+        #    event_info = line.split(": ")
+        #    if len(event_info) == 2:
+        #        cls, time = event_info
+        #        # Split into start and end (execption for no time)
+        #        # The error only seems to happen if you add a - in the text like calc-2
+        #        if (" - " in time):
+        #            start, end = time.split(" - ")
+        #            events.append((cls.strip(), start.strip(), end.strip()))
+        #        else:
+        #            events.append((cls.strip(), "0:00 AM", "1:00 AM"))
 
-    return events
+    #return events
 
 
 
