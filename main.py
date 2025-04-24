@@ -35,8 +35,8 @@ Your output should look like: (write titles exactly)
 - User preferences:
   - [user’s stated goals]
 - Event options:
-  - Class A: 11:00 or 4:00
-  - Class B: 4:00 or 7:00
+  - Event A: 11:00 or 4:00
+  - Event B: 4:00 or 7:00
 
 ### User Prompt:
 {}
@@ -60,7 +60,9 @@ Try to:
 
 At the end, present:
 1. A finalized schedule, seperated by newlines, with the title ### Final Schedule: Events labeled as [Event]: [Start] - [End]
-Example: - Name: 12:00 PM - 3:00 PM
+Example:
+- Name1: 12:00 PM - 3:00 PM
+- Name2: 4:00 PM - 6:00 PM
 2. A brief rationale explaining how user preferences were considered or where trade-offs were made
 
 ### Objectives:
